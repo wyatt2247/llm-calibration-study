@@ -12,7 +12,8 @@ You will need the following run the scripts
 * datasets
 * python-dotenv
 
-They are availibel to in the requirement.txt file
+They are the libraries youn neee so please instal them via requirement.txt file
+* pip install -r requirements.txt
 
 You will also need python which would be python 3.9 or later
 
