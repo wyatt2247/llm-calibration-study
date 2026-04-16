@@ -1,5 +1,5 @@
-#LLM Calibration study# 
-#The project tests the accuracy and confidanc of 5 LLM# 
+LLM Calibration study# 
+The project tests the accuracy and confidanc of 5 LLM 
 
 You will need the following run the scripts 
 openai
