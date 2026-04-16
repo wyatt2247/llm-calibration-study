@@ -14,9 +14,6 @@ This project evaluates the **confidence calibration and trustworthiness** of fiv
 #### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
-
-
-
 2. Required Libraries
 
 openai
@@ -29,24 +26,20 @@ datasets
 python-dotenv
 
 3. Running the Scripts
-Step 1: Run the Experiment (This takes ~30 minutes to 2 hours)
-
-python run_experiment.py
-
+Step 1: Run the Experiment
+(This step takes approximately 30 minutes to 2 hours)
+Bashpython run_experiment.py
 Step 2: Analyze and Visualize Results
-
-python analyze.py
+Bashpython analyze.py
 python visualize.py
-
-Note: run_experiment.py makes 1,800 API calls to OpenRouter. Make sure you have sufficient credits and your API key set in .env.
+Note: run_experiment.py makes 1,800 API calls to OpenRouter. Make sure you have sufficient credits and your OpenRouter API key is set in the .env file.
 Requirements
 
 Python 3.9 or later
-OpenRouter API key (set in .env file)
+OpenRouter API key (add to .env file)
 
 Project Structure
 
-run_experiment.py – Runs the benchmark and saves results
-analyze.py – Computes metrics (accuracy, calibration gap, ECE, Brier score, etc.)
+run_experiment.py – Runs the benchmark and saves raw results
+analyze.py – Computes all metrics (accuracy, calibration gap, ECE, Brier score, consistency, etc.)
 visualize.py – Generates all plots and figures
-
