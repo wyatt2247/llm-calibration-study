@@ -19,7 +19,7 @@ pip install requirements.txt -> this is the commmand you need to instal the libr
 
 After that just need to run each script 
 
-run_experimanet -> thos one takes about 30 minutes to run and run first 
+run_experimanet -> this one takes about 30 minutes to run and run first 
   python run_experimiment.py
 
 Analyze and visualize can be run together 
