@@ -1,16 +1,16 @@
 LLM Calibration study 
 
-The project tests the accuracy and confidanc of 5 LLM 
+The project tests the accuracy and confidanc of 5 LLMs 
 
 You will need the following run the scripts 
-openai
-pandas
-numpy
-matplotlib
-seaborn
-scikit-learn
-datasets
-python-dotenv
+* openai
+* pandas
+* numpy
+* matplotlib
+* seaborn
+* scikit-learn
+* datasets
+* python-dotenv
 
 They are availibel to in the requirement.txt file
 
