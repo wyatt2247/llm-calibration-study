@@ -12,7 +12,8 @@ This project evaluates the **confidence calibration and trustworthiness** of fiv
 ### How to Run the Project
 
 #### 1. Install Dependencies
-``` pip install -r requirements.txt
+```
+pip install -r requirements.txt
 
 2. Required Libraries
 
