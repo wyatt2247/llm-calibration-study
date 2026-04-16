@@ -28,10 +28,14 @@ python-dotenv
 3. Running the Scripts
 Step 1: Run the Experiment
 (This step takes approximately 30 minutes to 2 hours)
-Bashpython run_experiment.py
+
+* python run_experiment.py
+
 Step 2: Analyze and Visualize Results
-Bashpython analyze.py
-python visualize.py
+
+* python analyze.py
+* python visualize.py
+
 Note: run_experiment.py makes 1,800 API calls to OpenRouter. Make sure you have sufficient credits and your OpenRouter API key is set in the .env file.
 Requirements
 
