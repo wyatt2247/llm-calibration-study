@@ -1,3 +1,5 @@
+# this is the script that creates the actual charts and bars from the oranized data from anlayze script
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
