@@ -1,4 +1,4 @@
-# The comments are used to help me explain the code and make trouble shooting easier to solve issues that I encountered with the code.
+# The comments are used to help me explain the code and make troubleshooting easier to solve issues that I encountered with the code.
 # The libraries used in this code are:
 #=================Imports & Libraries=================#
 import os 
@@ -15,6 +15,7 @@ load_dotenv()
 
 
 #=================Functions=====================#
+# tells OpenRouter which models will be used and which questions will be sent from the set subjects 
 #=================Configurations=====================#
 API_KEY = os.getenv("OPENROUTER_API_KEY")
 client = OpenAI(api_key=API_KEY, base_url="https://openrouter.ai/api/v1")
@@ -41,28 +42,28 @@ SUBJECTS= [
 ]
 
 # ======== NUM of QUESTIONS and RUNS ========
-NUM_QUESTIONS = 20
-NUM_RUNS = 3
+NUM_QUESTIONS = 20 # number of questions used per subject 
+NUM_RUNS = 3 # number of tries per question that is asked to the Ai model
 TEMPERATURE = 0.7 # adds variation between runs so consistency can be measured overall
 MAX_TOKENS = 300
 
 OUTPUT_DIR = Path("results")
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-#The prompt that is used and to the Models via OpenRouter
+#The prompt that is used for the Models that are sent via OpenRouter that are given to each of the 5 models
 #================= Prompt ======================#
 
 def build_prompt(question, choices):
     choices_text = "\n".join([f"{chr(65+i)}) {c}" for i, c in enumerate(choices)])
     return f"""Question: {question}
 {choices_text}
-
+# what is actuall asked to each model fro each run and for each subject before each question is presented to the AI model
 Respond with ONLY your answer letter (A,B,C, or D) on the first line.
 On the second line, give your confidence score for the answer on a scale of 0 to 100.
 
 Answer:"""
 
-
+# How the script checks the answers for each model, making sure nothing is missed, and makes sure the answer doesn't cause the script to crash
 # ================== PARSING ======================#
 def parse_response(response_text):
     if not response_text or not response_text.strip():
@@ -71,7 +72,7 @@ def parse_response(response_text):
     text = response_text.strip()
 
     answer = None
-    confidence = 50 # safe fallback
+    confidence = 50 # safe fallback if no answer for confidence is given
 
     # Primary: Look for A/B/C/D followed by delimiter or space
     match = re.search(r'(?:^|\s|\n)([A-D])[)\s.:]', text, re.IGNORECASE)
@@ -124,7 +125,7 @@ def load_questions(subject):
         })
     return questions
 
-
+# requires the actual MMLU questions to be able to run
 # the script part that actually runs the experiment after getting the questions and models ready
 # ================== RUN EXPERIMENT ======================#
 
@@ -189,7 +190,7 @@ def run_experiment():
                         print(f"   Error: {model_name} run {run+1} - {e}")
                         time.sleep(5)
 
-    # outputs the results to the output file a csv file that is then required for Analyze.py to create tables for visualize.py to use to create the charts and bars
+    # outputs the results to the output file, a CSV file that is then required for Analyze.py to create tables for visualize.py to use to create the charts and bars
 
     df = pd.DataFrame(results)
     filename = OUTPUT_DIR / f"results_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
