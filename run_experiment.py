@@ -21,7 +21,7 @@ client = OpenAI(api_key=API_KEY, base_url="https://openrouter.ai/api/v1")
 
 # ======== MODELS USED for this experiment ========
 
-# ths are the models that are sent to OpenRouter via the API Call tells OpenRouter which models to call and use
+# these are the models that are sent to OpenRouter via the API Call tells OpenRouter which models to call and use
 MODELS = {
     "GPT-3.5-Turbo": "openai/gpt-3.5-turbo",
     "Llama-3.2-3B": "meta-llama/llama-3.2-3b-instruct",
@@ -49,6 +49,7 @@ MAX_TOKENS = 300
 OUTPUT_DIR = Path("results")
 OUTPUT_DIR.mkdir(exist_ok=True)
 
+#The prompt that is used and to the Models via OpenRouter
 #================= Prompt ======================#
 
 def build_prompt(question, choices):
@@ -90,6 +91,7 @@ def parse_response(response_text):
                 answer = match.group(1).upper()
                 break
 
+# gets the Confidence score for each of the models
     # === Confidence  ====
     conf_match = re.search(r'(?:confidence|conf|score)[:\s]*(\d+)', text, re.IGNORECASE)
     if conf_match:
@@ -108,7 +110,7 @@ def parse_response(response_text):
     
     return answer, confidence
 
-
+# loads the questions from the MMLU dataset to be used with the experiment
     # ================== LOAD QUESTIONS ======================#
 def load_questions(subject):
     dataset = load_dataset("cais/mmlu", subject, split="test")
@@ -187,7 +189,7 @@ def run_experiment():
                         print(f"   Error: {model_name} run {run+1} - {e}")
                         time.sleep(5)
 
-    # outputs the results to the output file a csv file 
+    # outputs the results to the output file a csv file that is then required for Analyze.py to create tables for visualize.py to use to create the charts and bars
 
     df = pd.DataFrame(results)
     filename = OUTPUT_DIR / f"results_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
