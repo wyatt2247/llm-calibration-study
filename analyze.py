@@ -1,3 +1,5 @@
+# strip takes the raw output from run_experiment.py and creates a table for visualizepy to use 
+
 from math import nan
 import pandas as pd
 import numpy as np
@@ -7,6 +9,7 @@ import statsmodels.stats.contingency_tables as smct
 
 RESULTS_DIR = Path('results')
 
+# checks if a cvs file has already been made for the results
 cvs_files = sorted(RESULTS_DIR.glob("results_*.csv"))
 if not cvs_files:
     print ("No results CSV found!")
@@ -30,6 +33,7 @@ votes = votes.merge(correct, on=["model", "subject", "question"])
 votes["is_correct"] = votes["voted_answer"] == votes["correct_answer"]
 
 # ================== ACCURACY WITH 95% CI ===========================
+# notes which model has an accuracy close to 95, which is good, the rest are lower 
 def accuracy_with_ci(group):
     n = len(group)
     successes = group["is_correct"].sum()
@@ -76,7 +80,7 @@ def compute_ece(model_df, n_bins=10):
 ece_results = [{"model": model, "ece": compute_ece(df[df["model"] == model])} for model in df["model"].unique()]
 summary = summary.merge(pd.DataFrame(ece_results), on="model")
 
-# brier Score
+# Brier Score
 brier = df.groupby("model").apply(lambda g: ((g["confidence"] / 100 - g["is_correct"].astype(int))**2).mean()).reset_index()
 brier.columns = ["model", "brier_score"]
 summary = summary.merge(brier, on="model")
@@ -92,6 +96,8 @@ summary = summary.merge(overconf, on="model")
 
 
 # ======================== SIGNIFICANCE (MCNEMAR vs GROK) =====================
+# uses the Grok output as a comparison, as it's the model that performs the best overall against the others 
+
 grok_votes = votes[votes["model"] == "Grok-4.1-Fast"].rename(columns={"is_correct":"grok_correct"})
 
 summary["p_value_vs_grok"] = np.nan
@@ -109,6 +115,7 @@ for model in summary["model"]:
             pass
 
 # ======================== OUTPUT =====================
+# creates the CVS file for visualize.py to use to create the charts and bars from 
 
 print("\n=== Final Summary ===")
 print(summary.to_string(index=False))
