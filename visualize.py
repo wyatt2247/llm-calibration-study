@@ -7,8 +7,9 @@ import seaborn as sns
 from sklearn.calibration import calibration_curve
 from pathlib import Path
 
-# Creates graphs and charts from the analyse.py script -> takes the output of that and feeds it into visualize.py
+# Creates graphs and charts from the analyze.py script -> takes the output of that and feeds it into visualize.py
 # ================== Config =====================
+# takes the raw output created by the run_experiment script
 RESULTS_DIR = Path("results")
 FIGURES_DIR = Path("figures")
 FIGURES_DIR.mkdir(exist_ok=True)
@@ -19,6 +20,7 @@ acc_by_subject = pd.read_csv(RESULTS_DIR / "accuracy_by_subject.csv")
 csv_files = sorted(RESULTS_DIR.glob("results_*.csv"))
 df = pd.read_csv(csv_files[-1])
 
+Creates the accuracy vs confidence chart
 # ================== ACCURACY VS CONFIDENCE =====================
 def plot_accuracy_vs_confidence():
     fig, ax = plt.subplots(figsize = (8,5))
@@ -42,6 +44,7 @@ def plot_accuracy_vs_confidence():
     plt.close()
     print("Saved accurracy_vs_confidence.png")
 
+# creates the calibration gap chart 
 #=================== CALIBRATION GAP ======================
 def plot_calibration_gap():
     fig, ax = plt.subplots(figsize=(8,5))
@@ -63,7 +66,7 @@ def plot_calibration_gap():
     plt.close()
     print("Saved calibration_gap.png")
 
-
+# creates the calibration curve chart 
 #=================== CALIBRATION CURVE =====================
 def plot_calibration_curve():
     fig, ax = plt.subplots(figsize=(8,6))
@@ -99,7 +102,7 @@ def plot_calibration_curve():
     plt.close()
     print("Saved calibration_curve.png")
 
-
+# creates the Heatmap chart 
 # ================== HEATMAP =====================
 
 def plot_heatmap():
@@ -120,7 +123,7 @@ def plot_heatmap():
     plt.close()
     print("Saved heatmap.png")
 
-
+# creates the consistency figure to be used in the final report 
 # ================== CONSISTENCY =====================
 def plot_consistency():
     fig, ax = plt.subplots(figsize=(8,5))
@@ -143,7 +146,7 @@ def plot_consistency():
     plt.close()
     print("Saved consistency.png")
 
-
+# creates the confidence box plot to be used as a graph
 #=================== CONFIDENCE BOX PLOT =====================
 def plot_confidence_boxplot():
     fig, ax = plt.subplots(figsize=(8,5))
@@ -167,6 +170,7 @@ def plot_confidence_boxplot():
     plt.close()
     print("Saved confidence_boxplot.png")
 
+# creates the chart for both separate charts for both ECE and BRIER score
 #=================== ECE AND BRIER SCORE =====================
 
 def plot_ece_brier():
@@ -208,6 +212,7 @@ def plot_ece_brier():
     plt.close()
     print("Saved ece_brier.png")
 
+# calls all seven charts and, after creation, places them in the figures directory folder
 #Runs all 7 parts of the script to create each of the 7 figures needed for the report
 # ================== RUN ALL =====================
 
